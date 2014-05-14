@@ -3,11 +3,19 @@
 
 ## Loading and preprocessing the data
 
+Load the CSV file using Date class.
 
+```{r dataload}
+activity = read.csv("activity.csv", colClasses=c("numeric", "Date", "numeric"))
+```
 
 ## What is mean total number of steps taken per day?
 
-
+Aggregate the steps taken by date
+```{r histogram}
+steps = aggregate(steps ~ date, data = activity, FUN = sum)
+plot(steps, type="h", col="red", lwd=5, main="Total steps per day", ylab="Steps/Day", xlab="Date")
+```
 
 ## What is the average daily activity pattern?
 
