@@ -22,7 +22,7 @@ Aggregate the steps taken by date and plot histogram.
   xyplot(steps ~ date, data = totalsteps, type = "h", lwd = 5, main = "Total steps per day")
   ```
   
-  ![plot of chunk histogram](figure/histogram.png) 
+  ![plot of chunk histogram1](figure/histogram1.png) 
 
 
 2. Calculate and report the mean and median total number of steps taken per day.
@@ -42,8 +42,8 @@ Aggregate the steps taken by date and plot histogram.
   ```r
   library(lattice)
   library(stats)
-  avgsteps = aggregate(steps ~ interval, data = activity, FUN = mean)
-  xyplot(steps ~ interval, data = avgsteps, type = "l", main = "Average Steps per 5-minute Interval")
+  meansteps = aggregate(steps ~ interval, data = activity, FUN = mean)
+  xyplot(steps ~ interval, data = meansteps, type = "l", main = "Average Steps per 5-minute Interval")
   ```
   
   ![plot of chunk timeseriesplot](figure/timeseriesplot.png) 
@@ -53,9 +53,9 @@ Aggregate the steps taken by date and plot histogram.
 
   
   ```r
-  sortedavg = avgsteps[order(avgsteps$steps), ]
-  maxinterval = sortedavg[length(sortedavg[[2]]), 1]
-  maxsteps = sortedavg[length(sortedavg[[2]]), 2]
+  sortedmean = meansteps[order(meansteps$steps), ]
+  maxinterval = sortedmean[length(sortedmean[[2]]), 1]
+  maxsteps = sortedmean[length(sortedmean[[2]]), 2]
   ```
 
   
@@ -63,6 +63,48 @@ Aggregate the steps taken by date and plot histogram.
 
 ## Imputing missing values
 
+1. Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with NAs).
+
+  
+  ```r
+  nacount = sum(!complete.cases(activity))
+  ```
+
+  There are **2304** number of missing values in the dataset.
+  
+2. Devise a strategy for filling in all of the missing values in the dataset. The strategy is to use the mean for that 5-minute interval.
+
+3. Create a new dataset that is equal to the original dataset but with the missing data filled in.
+  Replace all NAs with mean for that 5-minute interval.
+  
+  
+  ```r
+  activity$steps = replace(activity$steps, is.na(activity$steps), meansteps$steps)
+  ```
+
+4. Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
+
+  Make a histogram of the total number of steps taken each day. 
+  Aggregate the steps taken by date and plot histogram.
+  
+  ```r
+  library(lattice)
+  totalsteps = aggregate(steps ~ date, data = activity, FUN = sum)
+  xyplot(steps ~ date, data = totalsteps, type = "h", lwd = 5, main = "Total steps per day")
+  ```
+  
+  ![plot of chunk histogram2](figure/histogram2.png) 
+
+
+  Calculate and report the mean and median total number of steps taken per day.
+  
+  ```r
+  meansteps = mean(totalsteps$steps)
+  mediansteps = median(totalsteps$steps)
+  ```
+
+
+  The mean and median total number of steps taken per day is **10766** and **10766** respectively. So imputing missing data did not impact the mean but did impact the median by bringing it closer to the mean.
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
