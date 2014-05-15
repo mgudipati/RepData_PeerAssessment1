@@ -108,3 +108,26 @@ Aggregate the steps taken by date and plot histogram.
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
+
+1. Create a new factor variable in the dataset with two levels, weekday and weekend indicating whether a given date is a weekday or weekend day.
+
+  
+  ```r
+  activity$weekday = rep("weekend", nrow(activity))
+  activity$weekday = replace(activity$weekday, weekdays(activity$date, T) %in% 
+      c("Mon", "Tue", "Wed", "Thu", "Fri"), "weekday")
+  activity = transform(activity, weekday = factor(weekday))
+  summary(activity)
+  ```
+  
+  ```
+  ##      steps            date               interval       weekday     
+  ##  Min.   :  0.0   Min.   :2012-10-01   Min.   :   0   weekday:12960  
+  ##  1st Qu.:  0.0   1st Qu.:2012-10-16   1st Qu.: 589   weekend: 4608  
+  ##  Median :  0.0   Median :2012-10-31   Median :1178                  
+  ##  Mean   : 37.4   Mean   :2012-10-31   Mean   :1178                  
+  ##  3rd Qu.: 27.0   3rd Qu.:2012-11-15   3rd Qu.:1766                  
+  ##  Max.   :806.0   Max.   :2012-11-30   Max.   :2355
+  ```
+
+  

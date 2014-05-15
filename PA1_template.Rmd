@@ -84,3 +84,13 @@ Aggregate the steps taken by date and plot histogram.
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
+
+1. Create a new factor variable in the dataset with two levels, weekday and weekend indicating whether a given date is a weekday or weekend day.
+
+  ```{r}
+  activity$weekday = rep("weekend", nrow(activity))
+  activity$weekday = replace(activity$weekday, weekdays(activity$date, T) %in% c("Mon", "Tue", "Wed", "Thu", "Fri"), "weekday")
+  activity = transform(activity, weekday = factor(weekday))
+  summary(activity)
+  ```
+  
