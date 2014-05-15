@@ -13,22 +13,23 @@
 
 ## What is mean total number of steps taken per day?
 
-1. Aggregate the steps taken by date and plot historical graph.
+1. Make a histogram of the total number of steps taken each day. 
+Aggregate the steps taken by date and plot histogram.
   
   ```r
-  steps = aggregate(steps ~ date, data = activity, FUN = sum)
-  plot(steps, type = "h", col = "red", lwd = 5, main = "Total steps per day", 
-      ylab = "Steps/Day", xlab = "Date")
+  library(lattice)
+  totalsteps = aggregate(steps ~ date, data = activity, FUN = sum)
+  xyplot(steps ~ date, data = totalsteps, type = "h", lwd = 5, main = "Total steps per day")
   ```
   
   ![plot of chunk histogram](figure/histogram.png) 
 
 
-2. Calculate the mean and median total number of steps taken per day.
+2. Calculate and report the mean and median total number of steps taken per day.
   
   ```r
-  mean = mean(steps$steps)
-  median = median(steps$steps)
+  meansteps = mean(totalsteps$steps)
+  mediansteps = median(totalsteps$steps)
   ```
 
 
@@ -36,7 +37,29 @@
 
 ## What is the average daily activity pattern?
 
+1. Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis).
+  
+  ```r
+  library(lattice)
+  library(stats)
+  avgsteps = aggregate(steps ~ interval, data = activity, FUN = mean)
+  xyplot(steps ~ interval, data = avgsteps, type = "l", main = "Average Steps per 5-minute Interval")
+  ```
+  
+  ![plot of chunk timeseriesplot](figure/timeseriesplot.png) 
 
+
+2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
+
+  
+  ```r
+  sortedavg = avgsteps[order(avgsteps$steps), ]
+  maxinterval = sortedavg[length(sortedavg[[2]]), 1]
+  maxsteps = sortedavg[length(sortedavg[[2]]), 2]
+  ```
+
+  
+  The **835**th 5-minute interval contains the maximum number, **206**, of steps.
 
 ## Imputing missing values
 
