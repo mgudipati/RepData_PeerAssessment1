@@ -46,7 +46,7 @@ Aggregate the steps taken by date and plot histogram.
   xyplot(steps ~ interval, data = meansteps, type = "l", main = "Average Steps per 5-minute Interval")
   ```
   
-  ![plot of chunk timeseriesplot](figure/timeseriesplot.png) 
+  ![plot of chunk timeseries1](figure/timeseries1.png) 
 
 
 2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
@@ -130,4 +130,14 @@ Aggregate the steps taken by date and plot histogram.
   ##  Max.   :806.0   Max.   :2012-11-30   Max.   :2355
   ```
 
+2. Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). 
+
   
+  ```r
+  library(lattice)
+  xyplot(steps ~ interval | weekday, data = activity, type = "l", layout = c(1, 
+      2), xlab = "Interval", ylab = "Number of steps")
+  ```
+  
+  ![plot of chunk timeseries2](figure/timeseries2.png) 
+

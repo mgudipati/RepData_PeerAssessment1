@@ -30,7 +30,7 @@ Aggregate the steps taken by date and plot histogram.
 ## What is the average daily activity pattern?
 
 1. Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis).
-  ```{r timeseriesplot}
+  ```{r timeseries1}
   library(lattice)
   library(stats)
   meansteps = aggregate(steps ~ interval, data = activity, FUN = mean)
@@ -93,4 +93,9 @@ Aggregate the steps taken by date and plot histogram.
   activity = transform(activity, weekday = factor(weekday))
   summary(activity)
   ```
-  
+2. Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). 
+
+  ```{r timeseries2}
+  library(lattice)
+  xyplot(steps ~ interval | weekday, data = activity, type = "l", layout = c(1,2), xlab = "Interval", ylab = "Number of steps")
+  ```
